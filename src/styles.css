@@ -10,3 +10,5 @@
 .splash h1{font-family:"Archivo Black",Manrope,Arial,sans-serif;letter-spacing:-.055em}.hero-art{top:0;height:calc(100% + 55px)}.art-motto{display:none}
 @media(max-width:650px){.hero-art{height:520px}}
 .editor>.editor-fields{border:0;border-radius:0;margin:0;min-width:0;flex:1}.owner-access{padding:30px}.owner-access header{display:flex;justify-content:space-between;align-items:center;gap:20px}.owner-access label{display:flex;flex-direction:column;gap:10px;margin:20px 0}.owner-access input{padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:10px;color:inherit}.content-error{padding:10px 4%;margin:0;background:var(--panel);font-size:12px}
+.bow-accent{width:44px;height:62px;flex-shrink:0}.enter{max-width:510px}.update-tabs{display:flex;gap:10px;margin-bottom:20px}.update-tabs [aria-pressed=true]{background:var(--lilac);color:var(--ink)}
+@media(max-width:650px){.bow-accent{width:32px;height:45px}.enter{gap:12px}.signature-note{letter-spacing:.17em}}

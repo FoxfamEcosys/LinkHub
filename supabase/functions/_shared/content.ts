@@ -15,7 +15,7 @@ export const contentSchema = z.object({
   credits: z.string().max(6000),
   rules: z.string().max(6000),
   merchUrl: z.union([z.literal(''),webUrl]),
-  updates: z.array(z.object({id:itemId,title:z.string().trim().min(1).max(160),body:z.string().max(4000),date:calendarDate,pinned:z.boolean()})).max(100)
+  updates: z.array(z.object({id:itemId,title:z.string().trim().min(1).max(160),body:z.string().max(4000),date:calendarDate,pinned:z.boolean(),archived:z.boolean().default(false)})).max(100)
 }).superRefine((content, context) => {
   for (const key of ['links', 'updates'] as const) {
     const ids = new Set<string>();
