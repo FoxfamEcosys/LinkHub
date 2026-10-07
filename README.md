@@ -2,7 +2,7 @@
 
 Veri's personal website redesign for verivt.stream.
 
-GitHub repository: `FoxfamEcosys/LinkHub`, confirmed by the user. Local `origin` points to `https://github.com/FoxfamEcosys/LinkHub.git`. Local changes have not yet been pushed.
+GitHub repository: `FoxfamEcosys/LinkHub`, confirmed by the user. Local `origin` points to `https://github.com/FoxfamEcosys/LinkHub.git`. The initial build is checked in on GitHub; no live deployment has been made.
 
 ## Confirmed design
 
@@ -29,3 +29,14 @@ GitHub repository: `FoxfamEcosys/LinkHub`, confirmed by the user. Local `origin`
 - Hosting and persistent content/auth service configuration before live publishing.
 
 A local React prototype now includes the splash, section navigation, and browser-only draft editor. Owner authentication, persistent media storage, and publishing remain unconnected. Nothing has been deployed.
+
+## Local development
+
+Use Node.js 24 and pnpm. Run `pnpm install --frozen-lockfile`, then `pnpm dev`.
+
+Validation: `pnpm typecheck`, `pnpm test`, and `pnpm build`.
+The build produces `dist/client`, `dist/server/index.js`, and `dist/.openai/hosting.json` for a later Sites handoff.
+
+## Current editing boundary
+
+The owner studio currently saves text drafts only in this browser. Image files can be previewed without modifying their bytes. Publish remains disabled until owner authentication, persistent content storage, and media storage are connected and tested. Do not treat browser drafts as backups or published changes.
