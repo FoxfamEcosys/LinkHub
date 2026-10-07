@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, ArrowLeft, House, User, Link as LinkIcon, Heart, Storefront, Scroll, StarFour, TwitchLogo, DiscordLogo, EnvelopeSimple, ArrowsOutSimple, NotePencil, Megaphone } from '@phosphor-icons/react';
 import { initialContent, type SiteContent } from './content';
 import './styles.css';
-import { Editor } from './components/Editor';
+import { OwnerAccess } from './components/OwnerAccess';
+import { loadPublished } from './services/contentStore';
 const sections = ['shrine','about','links','credits','rules','merch','updates'] as const;
 type Section = typeof sections[number];
 const labels: Record<Section,string> = {shrine:'Shrine',about:'About Veri',links:'Links',credits:'Credits',rules:'Stream rules',merch:'Merch',updates:'Updates'};
@@ -13,6 +14,10 @@ export function App() {
   const [content,setContent] = useState<SiteContent>(initialContent);
   const [editing,setEditing] = useState(false);
   const [preview,setPreview] = useState(false);
+  const [previewRevision,setPreviewRevision] = useState<number>();
+  const [published,setPublished] = useState<SiteContent>(initialContent);
+  const [contentError,setContentError] = useState('');
+  useEffect(()=>{let active=true;loadPublished().then(value=>{if(active&&value){setContent(value);setPublished(value);}}).catch(()=>{if(active)setContentError('Live content could not be loaded. Showing the saved site defaults.');});return()=>{active=false;};},[]);
   const [expanded,setExpanded] = useState(false);
   useEffect(()=>{const change=()=>{setSection(sectionFromUrl());document.querySelector<HTMLElement>('.window-content')?.scrollTo(0,0);};addEventListener('hashchange',change);return()=>removeEventListener('hashchange',change);},[]);
   useEffect(()=>{document.title=`${section==='home'?'Veri':labels[section]} · The Scuffox Shrine`;},[section]);
@@ -23,7 +28,8 @@ export function App() {
   const nav = (items:Section[])=>items.map(item=>{const Icon={shrine:House,about:User,links:LinkIcon,credits:StarFour,rules:Scroll,merch:Storefront,updates:Megaphone}[item];return <a key={item} href={`#${item}`} className={section===item?'selected':''} aria-current={section===item?'page':undefined}><Icon size={28} weight={section===item?'fill':'regular'}/><span>{labels[item]}</span></a>;});
   return <>
     <a className="skip" href="#main-content" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus();}}>Skip to content</a>
-    {preview&&<div className="preview-banner">Draft preview · visible only in this browser <button onClick={()=>setEditing(true)}>Continue editing</button><button onClick={()=>{setContent(initialContent);setPreview(false);}}>Exit preview</button></div>}
+    {contentError&&<p className="content-error" role="status">{contentError}</p>}
+    {preview&&<div className="preview-banner">Draft preview · visible only in this browser <button onClick={()=>setEditing(true)}>Continue editing</button><button onClick={()=>{setContent(published);setPreview(false);}}>Exit preview</button></div>}
     <header className="topbar"><a href="#home" className="brand" aria-label="Veri home"><img src="/images/tenko-seal-original.png" alt="Veri’s Tenko seal"/><b>VERI</b></a><span className="brand-caption">THE SCUFFOX SHRINE</span><nav aria-label="Top navigation">{(['home','about','links','credits'] as const).map(item=><a key={item} href={`#${item}`} aria-current={section===item?'page':undefined}>{item==='home'?'Home':item[0].toUpperCase()+item.slice(1)}</a>)}</nav></header><nav className="quick-nav" aria-label="Community navigation"><a href="#rules"><Scroll/>Stream rules</a><a href="#merch"><Storefront/>Merch</a><a href="#updates"><Megaphone/>Updates</a></nav>
     {section==='home'?<main id="main-content" tabIndex={-1} className="splash"><div className="hero-copy"><div className="welcome">WELCOME TO <StarFour weight="fill"/></div><h1>THE<br/><em>SCUFFOX</em><br/>SHRINE</h1><p className="tagline">{content.tagline}</p>{actions}<p className="intro">{content.intro}</p><a className="enter" href="#shrine"><span className="signature">Veri</span><span className="signature-line"/><span className="signature-note">SAME CHAOS<br/>DIFFERENT DAY <ArrowRight size={16}/></span></a></div><div className="hero-art"><div className="art-disc"/><span className="art-motto">PLAY<br/>LAUGH<br/>BE HERE</span><StarFour className="hero-star" weight="fill" aria-hidden="true"/><img src={content.splashImage} alt="Veri, a white-haired fox-eared character with a staff and glowing magic in her hand" style={{objectPosition:`${content.imagePosition}% top`}}/></div><footer className="splash-footer"><a href="#links"><LinkIcon size={34}/><div>All my links<small>AROUND THE INTERNET</small></div></a><a href="#merch"><Heart size={38} weight="fill"/><div>Support<small>FUEL THE CHAOS</small></div></a><a href="mailto:veri@verivt.stream"><EnvelopeSimple size={36}/><div>Contact<small>GET IN TOUCH</small></div></a><span>THANKS FOR BEING HERE <StarFour weight="fill"/></span></footer></main>:<main id="main-content" tabIndex={-1} className={`desktop ${expanded?'expanded':''}`}><nav className="side-menu left" aria-label="Explore">{nav(['shrine','about','links'])}</nav><article className="content-window"><header className="window-bar"><a href="#home" aria-label="Back to splash"><ArrowLeft size={22}/></a><span>{labels[section]}</span><button aria-label={expanded?'Restore window':'Expand window'} onClick={()=>setExpanded(!expanded)}><ArrowsOutSimple size={21}/></button></header><div className="window-content" tabIndex={0}>
     {featured&&section!=='updates'&&<a className="update-strip" href="#updates"><Megaphone/>Latest: {featured.title}<ArrowRight/></a>}
@@ -36,7 +42,7 @@ export function App() {
     {section==='updates'&&<><h2>Notes from<br/><em>the shrine.</em></h2>{content.updates.length?<div className="posts">{[...content.updates].sort((a,b)=>Number(b.pinned)-Number(a.pinned)||b.date.localeCompare(a.date)).map(post=><article key={post.id}><span>{post.pinned?'Pinned · ':''}<time dateTime={post.date}>{post.date}</time></span><h3>{post.title}</h3><p className="prose">{post.body}</p></article>)}</div>:<Empty title="A quiet moment, for now." text="New announcements and updates will appear here."/>}</>}
     </div></article><nav className="side-menu right" aria-label="More at the shrine">{nav(['updates','merch','credits'])}</nav></main>}
     <footer className="site-footer"><span>Veri · The Scuffox Shrine</span><a href="mailto:veri@verivt.stream"><EnvelopeSimple/>Say hello</a><button onClick={()=>setEditing(true)}><NotePencil/>Edit site</button></footer>
-    {editing&&<Editor content={content} onClose={()=>setEditing(false)} onPreview={draft=>{setContent(draft);setPreview(true);setEditing(false);}}/>}
+    {editing&&<OwnerAccess previewRevision={previewRevision} preferPreview={preview} content={content} onPublished={value=>{setContent(value);setPublished(value);setPreview(false);setEditing(false);}} onClose={()=>setEditing(false)} onPreview={(draft,revision)=>{setPreviewRevision(revision);setContent(draft);setPreview(true);setEditing(false);}}/>}
   </>;
 }
 function Empty({title,text}:{title:string;text:string}) {return <div className="empty"><StarFour size={32}/><h3>{title}</h3><p>{text}</p></div>;}

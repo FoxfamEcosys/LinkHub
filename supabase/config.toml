@@ -1,0 +1,3 @@
+[functions.linkhub-admin]
+# The handler verifies the bearer token with auth.getUser before every action.
+verify_jwt = false

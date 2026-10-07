@@ -28,7 +28,7 @@ GitHub repository: `FoxfamEcosys/LinkHub`, confirmed by the user. Local `origin`
 - Fourthwall storefront URL.
 - Hosting and persistent content/auth service configuration before live publishing.
 
-A local React prototype now includes the splash, section navigation, and browser-only draft editor. Owner authentication, persistent media storage, and publishing remain unconnected. Nothing has been deployed.
+A local React prototype now includes the splash, section navigation, and browser-only draft editor. Owner authentication, persistent media storage, and publishing have local implementation code but remain unconnected and unverified against a live Supabase project. Nothing has been deployed.
 
 ## Local development
 
@@ -40,3 +40,5 @@ The build produces `dist/client`, `dist/server/index.js`, and `dist/.openai/host
 ## Current editing boundary
 
 The owner studio currently saves text drafts only in this browser. Image files can be previewed without modifying their bytes. Publish remains disabled until owner authentication, persistent content storage, and media storage are connected and tested. Do not treat browser drafts as backups or published changes.
+
+See [Supabase setup and live acceptance](supabase/SETUP.md) for the optional backend. When public environment configuration is absent, the site remains in local preview mode.
