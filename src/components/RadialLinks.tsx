@@ -1,13 +1,13 @@
 import { useState, type CSSProperties } from 'react';
 import {
-  TwitchLogo, TiktokLogo, YoutubeLogo, TwitterLogo, DiscordLogo,
+  TwitchLogo, TiktokLogo, YoutubeLogo, XLogo, DiscordLogo,
   PatreonLogo, Gift, HandHeart, EnvelopeSimple, CalendarStar, Link as LinkIcon,
   ArrowUpRight,
 } from '@phosphor-icons/react';
 import type { SiteContent } from '../content';
 import './radial-links.css';
 const icons = {
-  twitch: TwitchLogo, tiktok: TiktokLogo, youtube: YoutubeLogo, twitter: TwitterLogo,
+  twitch: TwitchLogo, tiktok: TiktokLogo, youtube: YoutubeLogo, twitter: XLogo,
   discord: DiscordLogo, patreon: PatreonLogo, throne: Gift, tip: HandHeart,
   email: EnvelopeSimple, twitchcon: CalendarStar,
 };

@@ -12,4 +12,4 @@ Latest splash reference: codex-clipboard-2af2775e-d420-4f3e-9e0e-b62019e3d201.pn
 
 Links: radial platform icons expand into named pills on hover and keyboard focus; touch first tap reveals, second opens. Use exact destinations recovered from https://verivt.stream/links on 2026-10-07, including event labeled TwitchCon 2025. Preserve the surrounding window and splash.
 
-Interior refinement: shared inset framing, restrained bow/cross divider and section-specific caption; retain original shell and palette. Link audit is recorded in docs/link-audit-2026-10-07.md. Do not restore hidden Twitch/Twitter/event items without verifying current replacements.
+Interior refinement: shared inset framing, restrained bow/cross divider and section-specific caption; retain original shell and palette. Link audit is recorded in docs/link-audit-2026-10-07.md. Twitch is https://www.twitch.tv/veri and X is https://x.com/veri_vt, confirmed by the owner and browser on October 7, 2026. Keep the historical event hidden unless a current appearance is verified.
