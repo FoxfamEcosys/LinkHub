@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, ArrowLeft, House, User, Link as LinkIcon, Heart, Storefront, Scroll, StarFour, TwitchLogo, DiscordLogo, EnvelopeSimple, ArrowsOutSimple, NotePencil, Megaphone } from '@phosphor-icons/react';
 import { initialContent, type SiteContent } from './content';
 import './styles.css';
+import { RadialLinks } from './components/RadialLinks';
 import { Updates } from './components/Updates';
 import { BowAccent } from './components/BowAccent';
 import { OwnerAccess } from './components/OwnerAccess';
@@ -37,7 +38,7 @@ export function App() {
     {featured&&section!=='updates'&&<a className="update-strip" href="#updates"><Megaphone/>Latest: {featured.title}<ArrowRight/></a>}
     {section==='shrine'&&<><div className="inside-welcome"><div><span className="small-label">MAKE YOURSELF AT HOME</span><h2>A little chaos.<br/><em>A little comfort.</em></h2><p>A place to belong. Welcome to the Scuffox Shrine.</p>{actions}</div><img src={content.splashImage} alt="Veri"/></div><div className="destination-list"><a href="#rules"><Scroll/><div><h3>Before we get chaotic</h3><p>Read the stream rules.</p></div><ArrowRight/></a><a href="#updates"><Megaphone/><div><h3>Notes from Veri</h3><p>Announcements and little life updates.</p></div><ArrowRight/></a></div></>}
     {section==='about'&&<><h2>Oh, hey.<br/><em>I’m Veri.</em></h2><p className="prose">{content.about}</p>{actions}</>}
-    {section==='links'&&<><h2>Find me<br/><em>around the internet.</em></h2><div className="destination-list">{content.links.filter(l=>!l.hidden).map(l=><OutLink key={l.id} href={l.url}><LinkIcon/><strong>{l.label}</strong><ArrowRight/></OutLink>)}</div></>}
+    {section==='links'&&<RadialLinks links={content.links}/>}
     {section==='rules'&&<><h2>Good company.<br/><em>A few ground rules.</em></h2>{content.rules?<p className="prose">{content.rules}</p>:<Empty title="The house rules are being written." text="Veri will publish the stream rules here."/>}</>}
     {section==='credits'&&<><h2>The people<br/><em>behind the magic.</em></h2>{content.credits?<p className="prose">{content.credits}</p>:<Empty title="Credits are on their way." text="Artist names and attribution links will appear here once provided."/>}</>}
     {section==='merch'&&<><h2>A little Veri.<br/><em>For your real life.</em></h2>{content.merchUrl?<><p>Browse the collection in Veri’s official shop.</p><OutLink href={content.merchUrl} className="button primary"><Storefront/>Visit the shop<ArrowRight/></OutLink></>:<Empty title="The merch shelf is getting ready." text="The official storefront link will be added here."/>}</>}

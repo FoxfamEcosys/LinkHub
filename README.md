@@ -42,3 +42,7 @@ The build produces `dist/client`, `dist/server/index.js`, and `dist/.openai/host
 The owner studio currently saves text drafts only in this browser. Image files can be previewed without modifying their bytes. Publish remains disabled until owner authentication, persistent content storage, and media storage are connected and tested. Do not treat browser drafts as backups or published changes.
 
 See [Supabase setup and live acceptance](supabase/SETUP.md) for the optional backend. When public environment configuration is absent, the site remains in local preview mode.
+
+## Links menu
+
+The Links window uses radial platform icons, expanding to named pills on hover or keyboard focus. On touch devices, tap once to reveal and again to open. Additional links beyond ten appear below the orbit. Default destinations were copied exactly from https://verivt.stream/links on 2026-10-07; its separate event link is labeled TwitchCon 2025. Destination redirects have not been replaced with guessed account URLs.

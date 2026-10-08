@@ -1,0 +1,49 @@
+.radial-links{container-type:inline-size;text-align:center}
+.radial-links h2{margin:0 0 12px;font-size:clamp(30px,3.2vw,48px)}
+.radial-links .orbit-hint{font-size:13px;margin:0;color:var(--muted)}
+.touch-hint{display:none}
+.orbit{--orbit-radius:clamp(94px,26cqi,172px);position:relative;min-height:calc(var(--orbit-radius)*2 + 115px);width:100%;margin:6px auto 0;isolation:isolate}
+.orbit::before,.orbit::after{content:'';position:absolute;left:50%;top:50%;width:calc(var(--orbit-radius)*2);aspect-ratio:1;border:1px solid var(--border);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:-1}
+.orbit::after{width:calc(var(--orbit-radius)*2 - 48px);border-style:dashed;opacity:.4}
+.orbit-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;flex-direction:column;gap:4px;pointer-events:none;color:var(--lilac)}
+.orbit-center img{height:58px;width:48px;object-fit:contain}
+.orbit-center>span{font-size:26px;font-weight:800;letter-spacing:.06em}
+.orbit-center small{font-size:8px;letter-spacing:.18em;line-height:1.9;color:var(--muted)}
+.orbit-list{list-style:none;padding:0;margin:0}
+.orbit-node{position:absolute;left:calc(50% + var(--orbit-x)*var(--orbit-radius));top:calc(50% + var(--orbit-y)*var(--orbit-radius));width:54px;height:54px;transform:translate(-50%,-50%)}
+.orbit-node:has(.orbit-link:hover),.orbit-node:has(.orbit-link:focus-visible),.orbit-node:has(.is-expanded){z-index:3}
+.orbit-link{position:absolute;left:0;top:0;display:flex;align-items:center;width:54px;height:54px;border:1px solid var(--border);border-radius:30px;background:var(--ink);color:var(--lilac);overflow:hidden;transition:width .23s ease,background .18s ease,color .18s ease,border-color .18s ease;text-align:left}
+.orbit-icon{width:52px;height:52px;display:grid;place-items:center;flex-shrink:0}
+.orbit-label{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0;padding-right:18px;font-size:13px;font-weight:700;white-space:nowrap;opacity:0;transition:opacity .16s ease}
+.orbit-label>svg{flex-shrink:0}
+.expand-left .orbit-link{left:auto;right:0;flex-direction:row-reverse}
+.expand-left .orbit-label{padding-right:0;padding-left:18px;flex-direction:row-reverse}
+.orbit-link:hover,.orbit-link:focus-visible,.orbit-link.is-expanded{width:210px;background:var(--lilac);color:var(--ink);border-color:var(--lilac)}
+.orbit-link:hover .orbit-label,.orbit-link:focus-visible .orbit-label,.orbit-link.is-expanded .orbit-label{opacity:1}
+.extra-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0}
+.extra-links a{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:99px;padding:12px 18px;font-size:13px}
+@container(max-width:520px){
+  .orbit{--orbit-radius:clamp(90px,31cqi,145px)}
+  .orbit-node{width:46px;height:46px}
+  .orbit-link{width:46px;height:46px}
+  .orbit-icon{width:44px;height:44px}
+  .orbit-icon svg{width:23px}
+  /* Expand toward the center to keep pills inside the narrow content window. */
+  .expand-left .orbit-link{left:0;right:auto;flex-direction:row}
+  .expand-left .orbit-label{padding:0 15px 0 0;flex-direction:row}
+  .expand-right .orbit-link{left:auto;right:0;flex-direction:row-reverse}
+  .expand-right .orbit-label{padding:0 0 0 15px;flex-direction:row-reverse}
+  .orbit-link:hover,.orbit-link:focus-visible,.orbit-link.is-expanded{width:180px}
+  .orbit-label{font-size:11px;gap:8px}
+  .orbit-center img{height:42px;width:34px}
+  .orbit-center>span{font-size:21px}
+  .orbit-center small{font-size:6px}
+  .radial-links h2{font-size:30px}
+}
+@media(hover:none){.pointer-hint{display:none}.touch-hint{display:inline}}
+@media(prefers-reduced-motion:reduce){.orbit-link,.orbit-label{transition:none}}
+
+.center-node .orbit-link{left:50%;right:auto;transform:translateX(-50%)}
+@container (min-width:521px) and (max-width:760px){.expand-left .orbit-link{left:0;right:auto;flex-direction:row}.expand-left .orbit-label{padding:0 18px 0 0;flex-direction:row}.expand-right .orbit-link{left:auto;right:0;flex-direction:row-reverse}.expand-right .orbit-label{padding:0 0 0 18px;flex-direction:row-reverse}.center-node .orbit-link{left:50%;right:auto}}
+
+.orbit-label{flex:1}.orbit-name{overflow:hidden;text-overflow:ellipsis;min-width:0}
